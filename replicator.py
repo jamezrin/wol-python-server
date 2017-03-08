@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 
-import socket
-import binascii
-import logging.config
-import yaml
 import sys
-import os
+import socket, binascii
+import logging.config, yaml
 from textwrap import wrap
 from wakeonlan import wol
 
@@ -22,20 +19,21 @@ def read_payload(payload):
 
             if len(list) == 16:
                 return list[0]
-
+    
     except Exception:
         pass
 
     raise ValueError("Received payload is not valid")
 
 def main():
-    logging.config.dictConfig(yaml.load(open('logging.conf')))
+    config = yaml.load(open('logging.conf'))
+    logging.config.dictConfig(config)
     logger = logging.getLogger('replicator')
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((BIND_ADDRESS, BIND_PORT))
 
-    while(1):
+    while True:
         try:
             data, addr = sock.recvfrom(102)
             logger.debug("Received packet from %s:%s" % (addr[0], addr[1]))
@@ -44,8 +42,7 @@ def main():
             logger.debug("Received payload: %s" % payload)
             
             try:
-                target = read_payload(payload)
-        
+                target = read_payload(payload)        
                 logger.debug("Waking up: %s" % target)
                 wol.send_magic_packet(target)
 
@@ -53,6 +50,7 @@ def main():
                 logger.debug(error)
 
         except KeyboardInterrupt:
+            logger.debug("Exiting because of keyboard interrupt")
             sys.exit()
 
 

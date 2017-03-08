@@ -1,0 +1,4 @@
+Flask==0.10.1
+flask-wtf==0.10.3
+wakeonlan==0.2.2
+pyyaml==3.12

@@ -13,7 +13,7 @@ def read_payload(payload):
     try:
         frame = payload[:12]
     
-        if frame == 'ffffffffffff':
+        if frame.lower() == 'f' * 12:
             repetitions = payload[12:]
             list = wrap(repetitions, 12)
 
@@ -56,4 +56,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

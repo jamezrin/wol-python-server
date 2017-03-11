@@ -48,17 +48,17 @@ def get_device(address):
         if 'address' in device:
             if bare == device['address']:
                 return device
+
     for name in devices:
         device = devices[name]
-        if not 'address' in device:
+        if 'address' not in device:
             return device
-    return None
 
 
 def convert_to_bare(address):
     mac = netaddr.EUI(address)
     mac.dialect = netaddr.mac_bare
-    return mac
+    return str(mac)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -72,7 +72,7 @@ def index():
             device = get_device(bare)
             if secret == device['secret']:
                 flash("Waking up...")
-                wol.send_magic_packet(str(bare))
+                wol.send_magic_packet(bare)
                 app.logger.debug("Waking up %s" % address)
             else:
                 flash("Incorrect secret")

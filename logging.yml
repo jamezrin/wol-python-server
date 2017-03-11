@@ -24,4 +24,5 @@ loggers:
     propagate: no
 root:
   level: DEBUG
-  handlers: [console,file]
+  handlers: [console, file]
+

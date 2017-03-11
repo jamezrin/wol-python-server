@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<title>Wake on Lan</title>
+<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class=center>
+    <h1>Wake on Lan</h1>
+    <form action="" method=post>
+        <div>
+            <label for="device-selector">Device</label>
+            <select id="device-selector"></select>
+        </div>
+        <div>
+            <label for="address-input">Address</label>
+            <input type="text" id="address-input" name="address" placeholder="FF:FF:FF:FF:FF:FF">
+        </div>
+        <div>
+            <label for="secret-input">Secret</label>
+            <input type="password" id="secret-input" name="secret">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<div class="flashes">
+    {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+    {% endfor %}
+</div>
+
+<script>
+    var devices = {{ devices|tojson }};
+
+    if (devices) {
+        //Add options to the selector with json
+        $.each(devices, function (id, item) {
+            $('#device-selector').append($('<option>', {
+                value: id,
+                text: item['alias']
+            }));
+        });
+
+        function update(id) {
+            var device = devices[id];
+            if (!device) return;
+            $("#address-input").prop('readonly', device.address).val(device.address);
+        }
+
+        //Update instantaneously and on value change
+        update($("#device-selector").on('change', function () {
+            update(this.value);
+        }).val());
+    }
+</script>

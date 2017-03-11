@@ -1,9 +1,12 @@
 devices:
+  custom:
+    alias: 'Custom'
+    secret: 'defaultpass'
   server:
     alias: 'Server'
     address: 'AA:BB:CC:DD:EE:FF'
-    passphrase: 'examplepass'
+    secret: 'serverpass'
   workstation:
     alias: 'Workstation'
     address: '1A-2B-3C-4D-5E-6F'
-    passphrase: 'examplepass'
+    secret: 'workstation'

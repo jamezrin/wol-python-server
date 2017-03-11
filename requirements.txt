@@ -1,5 +1,9 @@
 Flask==0.10.1
-flask-wtf==0.10.3
+flask-appconfig>=0.10
+flask-bootstrap
+flask-nav
+flask-debug
+flask-wtf
 wakeonlan==0.2.2
 pyyaml==3.12
 netaddr==0.7.19

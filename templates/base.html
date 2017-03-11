@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <title>Wake on Lan</title>
-<script type=text/javascript src="{{ url_for('static', filename='jquery.js') }}"></script>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div class=center>
@@ -28,6 +27,7 @@
     {% endfor %}
 </div>
 
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
 <script>
     var devices = {{ devices|tojson }};
 
